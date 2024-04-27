@@ -1,16 +1,32 @@
-# This is a sample Python script.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+class Bank:
+    def __init__(self, r, p, ID):
+        self.M = set()
+        self.r = r
+        self.p = p
+        self.ID = ID
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def readFileData(path):
+    f = open(path)
+    m, b, d = map(int, f.readline().strip().split(" "))
+    W = {}
+    for i, w in enumerate(map(int, f.readline().strip().split(" "))):
+        W[i] = w
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    B = set()
+    mode = False
+    cur = None
+    i = 0
+    for line in f:
+        line = line.strip()
+        if mode:  #
+            m, r, p = map(int, line.split(" "))
+            cur = Bank(r, p, i)
+        else:  # Münzen
+            cur.M = set(map(int, line.split(" ")))
+            B.add(cur)
+
+        mode = not mode
+        i += 1
+
